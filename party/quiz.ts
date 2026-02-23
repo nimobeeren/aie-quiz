@@ -20,6 +20,14 @@ import questionsData from "@/data/questions.json";
 
 const questions: Question[] = questionsData.questions as Question[];
 
+function formatNumber(n: number): string {
+  if (n >= 1_000_000_000_000) return `${+(n / 1_000_000_000_000).toPrecision(3)}T`;
+  if (n >= 1_000_000_000) return `${+(n / 1_000_000_000).toPrecision(3)}B`;
+  if (n >= 1_000_000) return `${+(n / 1_000_000).toPrecision(3)}M`;
+  if (n >= 1_000) return `${+(n / 1_000).toPrecision(3)}K`;
+  return `${Math.round(n)}`;
+}
+
 function initialState(): GameState {
   return {
     phase: "lobby",
@@ -378,7 +386,7 @@ export default class QuizServer implements Party.Server {
           .map((i) => question.options[i])
           .join(", ");
       } else if (question.type === "slider") {
-        correctAnswer = String(question.correctAnswer);
+        correctAnswer = formatNumber(question.correctAnswer);
       } else if (question.type === "ranking") {
         correctAnswer = question.correctOrder
           .map((i) => question.options[i])

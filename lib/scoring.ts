@@ -14,8 +14,8 @@ export function scoreSingleChoice(
 }
 
 /**
- * Multi-choice: partial credit based on correct selections minus incorrect ones.
- * accuracy = (correctHits - wrongSelections) / totalCorrect, floored at 0
+ * Multi-choice: partial credit for correct selections, half-weight penalty for wrong ones.
+ * accuracy = (correctHits - wrongSelections * 0.5) / totalCorrect, floored at 0
  * Perfect selection gets full speed-based score; partial gets proportional credit.
  */
 export function scoreMultiChoice(
@@ -32,7 +32,7 @@ export function scoreMultiChoice(
     if (correctSet.has(v)) correctHits++;
   }
   const wrongSelections = selectedSet.size - correctHits;
-  const accuracy = Math.max(0, (correctHits - wrongSelections) / correctSet.size);
+  const accuracy = Math.max(0, (correctHits - wrongSelections * 0.5) / correctSet.size);
 
   if (accuracy === 0) return 0;
   return Math.round(accuracy * speedScore(responseTimeMs, timerDurationMs));
