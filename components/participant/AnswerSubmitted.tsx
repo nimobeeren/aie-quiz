@@ -3,6 +3,7 @@ interface AnswerSubmittedProps {
     outcome: "correct" | "partial" | "wrong";
     pointsEarned: number;
     newTotal: number;
+    question: string;
     correctAnswer?: string;
     yourAnswer?: string;
   };
@@ -31,7 +32,10 @@ export default function AnswerSubmitted({ result }: AnswerSubmittedProps) {
     result.outcome === "partial" ? "Almost!" : "Not quite!";
 
   return (
-    <div className="flex flex-col items-center gap-4">˙
+    <div className="flex flex-col items-center gap-4">
+      <p className="text-center text-lg font-medium text-gray-300">
+        {result.question}
+      </p>
       <div className="text-6xl">{emoji}</div>
       <p className="text-2xl font-bold">{label}</p>
       <p className="text-4xl font-bold text-yellow-400">

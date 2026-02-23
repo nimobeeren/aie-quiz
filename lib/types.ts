@@ -139,6 +139,7 @@ export interface ParticipantState {
     outcome: "correct" | "partial" | "wrong";
     pointsEarned: number;
     newTotal: number;
+    question: string;
     correctAnswer?: string;
     yourAnswer?: string;
   };

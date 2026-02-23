@@ -4,12 +4,12 @@
       "type": "multi",
       "question": "What is AI Engineering?",
       "options": [
-        "Building applications that rely on AI models",
-        "Using AI tools to build applications",
+        "A superset of prompt engineering",
         "Training new LLMs",
-        "A superset of prompt engineering"
+        "Building applications that rely on AI models",
+        "Using AI tools to build applications"
       ],
-      "correctAnswers": [0, 3],
+      "correctAnswers": [2, 0],
       "timerSeconds": 20
     },
     {
@@ -22,15 +22,15 @@
     {
       "type": "single",
       "question": "Using MCP, how does a server request more information from a client?",
-      "options": ["Elicitation", "Sampling", "Handshake", "Prompting"],
-      "correctAnswer": 0,
+      "options": ["Sampling", "Prompting", "Elicitation", "Handshake"],
+      "correctAnswer": 2,
       "timerSeconds": 20
     },
     {
       "type": "ranking",
       "question": "Rank these models by intelligence (according to Artificial Analysis)",
-      "options": ["Gemini 3.1 Pro", "GLM-5", "DeepSeek V3.2", "Mistral Large 3"],
-      "correctOrder": [0, 1, 2, 3],
+      "options": ["DeepSeek V3.2", "Mistral Large 3", "Gemini 3.1 Pro", "GLM-5"],
+      "correctOrder": [2, 3, 0, 1],
       "timerSeconds": 20
     },
     {

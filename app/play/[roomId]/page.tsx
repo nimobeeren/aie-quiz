@@ -124,6 +124,7 @@ export default function PlayPage({
                 question=""
                 min={state.question.min}
                 max={state.question.max}
+                endTime={state.endTime}
                 onSubmit={(val) => handleSubmitAnswer(val)}
               />
             )}

@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 interface LogSliderProps {
   question: string;
   min: number;
   max: number;
+  endTime: number | null;
   onSubmit: (value: number) => void;
 }
 
@@ -25,17 +26,32 @@ function valueToSlider(value: number, min: number, max: number): number {
   return 1000 * Math.log(value / min) / Math.log(max / min);
 }
 
-export default function LogSlider({ question, min, max, onSubmit }: LogSliderProps) {
+export default function LogSlider({ question, min, max, endTime, onSubmit }: LogSliderProps) {
   const initialPosition = valueToSlider(Math.sqrt(min * max), min, max);
   const [position, setPosition] = useState(Math.round(initialPosition));
   const [submitted, setSubmitted] = useState(false);
+  const positionRef = useRef(position);
+  positionRef.current = position;
 
   const currentValue = sliderToValue(position, min, max);
 
   function handleSubmit() {
-    onSubmit(currentValue);
+    if (submitted) return;
+    onSubmit(sliderToValue(positionRef.current, min, max));
     setSubmitted(true);
   }
+
+  // Auto-submit when timer expires
+  useEffect(() => {
+    if (!endTime || submitted) return;
+    const ms = endTime - Date.now();
+    if (ms <= 0) {
+      handleSubmit();
+      return;
+    }
+    const timeout = setTimeout(handleSubmit, ms);
+    return () => clearTimeout(timeout);
+  }, [endTime, submitted]);
 
   if (submitted) {
     return (

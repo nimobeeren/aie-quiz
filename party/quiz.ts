@@ -476,6 +476,7 @@ export default class QuizServer implements Party.Server {
         outcome,
         pointsEarned: score,
         newTotal: participant.score,
+        question: question.question,
         correctAnswer,
         yourAnswer,
       };

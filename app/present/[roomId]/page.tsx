@@ -63,6 +63,11 @@ export default function PresentPage({
 
       {state.phase === "results" && (
         <div className="flex flex-col items-center gap-6">
+          {state.question && (
+            <p className="text-center text-xl text-gray-300">
+              {state.question.question}
+            </p>
+          )}
           <h2 className="text-3xl font-bold">Results</h2>
           {state.question && "options" in state.question && state.results && (
             <div className="w-full max-w-2xl space-y-3">
