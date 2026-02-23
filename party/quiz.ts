@@ -345,13 +345,24 @@ export default class QuizServer implements Party.Server {
       base.leaderboard = this.buildLeaderboard();
     }
 
-    if (s.phase === "podium" || s.phase === "finished") {
+    if (s.phase === "podium") {
+      const lb = this.buildLeaderboard();
+      const revealed = 3 - s.revealedPodiumPlace;
+      base.podium = {
+        third: revealed >= 1 ? (lb[2] ?? null) : null,
+        second: revealed >= 2 ? (lb[1] ?? null) : null,
+        first: revealed >= 3 ? (lb[0] ?? null) : null,
+        revealed,
+      };
+    }
+
+    if (s.phase === "finished") {
       const lb = this.buildLeaderboard();
       base.podium = {
         third: lb[2] ?? null,
         second: lb[1] ?? null,
         first: lb[0] ?? null,
-        revealed: 3 - s.revealedPodiumPlace,
+        revealed: 3,
       };
       base.leaderboard = lb;
     }
@@ -470,11 +481,7 @@ export default class QuizServer implements Party.Server {
       };
     }
 
-    if (
-      s.phase === "leaderboard" ||
-      s.phase === "podium" ||
-      s.phase === "finished"
-    ) {
+    if (s.phase === "leaderboard") {
       const lb = this.buildLeaderboard();
       base.leaderboard = lb.slice(0, 5);
       if (participant) {
@@ -483,14 +490,36 @@ export default class QuizServer implements Party.Server {
       }
     }
 
-    if (s.phase === "podium" || s.phase === "finished") {
+    if (s.phase === "podium") {
       const lb = this.buildLeaderboard();
+      const revealed = 3 - s.revealedPodiumPlace;
+      // Only send names/scores for places that have been revealed
+      base.podium = {
+        third: revealed >= 1 ? (lb[2] ?? null) : null,
+        second: revealed >= 2 ? (lb[1] ?? null) : null,
+        first: revealed >= 3 ? (lb[0] ?? null) : null,
+        revealed,
+      };
+      // Only show rank after all places are revealed
+      if (revealed >= 3 && participant) {
+        const myEntry = lb.find((e) => e.name === participant.name);
+        base.myRank = myEntry?.rank;
+      }
+    }
+
+    if (s.phase === "finished") {
+      const lb = this.buildLeaderboard();
+      base.leaderboard = lb.slice(0, 5);
       base.podium = {
         third: lb[2] ?? null,
         second: lb[1] ?? null,
         first: lb[0] ?? null,
-        revealed: 3 - s.revealedPodiumPlace,
+        revealed: 3,
       };
+      if (participant) {
+        const myEntry = lb.find((e) => e.name === participant.name);
+        base.myRank = myEntry?.rank;
+      }
     }
 
     return base;
