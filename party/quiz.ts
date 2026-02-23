@@ -483,6 +483,16 @@ export default class QuizServer implements Party.Server {
       }
     }
 
+    if (s.phase === "podium" || s.phase === "finished") {
+      const lb = this.buildLeaderboard();
+      base.podium = {
+        third: lb[2] ?? null,
+        second: lb[1] ?? null,
+        first: lb[0] ?? null,
+        revealed: 3 - s.revealedPodiumPlace,
+      };
+    }
+
     return base;
   }
 

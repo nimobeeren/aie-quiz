@@ -147,7 +147,7 @@ export default function PlayPage({
     );
   }
 
-  if (state.phase === "leaderboard" || state.phase === "podium") {
+  if (state.phase === "leaderboard") {
     return (
       <main className="flex min-h-screen flex-col items-center justify-center p-6">
         <div className="flex flex-col items-center gap-4">
@@ -173,6 +173,66 @@ export default function PlayPage({
             </div>
           )}
         </div>
+      </main>
+    );
+  }
+
+  if (state.phase === "podium" && state.podium) {
+    return (
+      <main className="flex min-h-screen flex-col items-center justify-center p-6">
+        <h2 className="mb-6 text-3xl font-bold">Final Results</h2>
+        <div className="flex items-end gap-3">
+          {/* 2nd place */}
+          <div
+            className={`flex w-28 flex-col items-center rounded-t-lg bg-gray-700 pb-3 pt-4 transition-opacity ${
+              state.podium.revealed >= 2 ? "opacity-100" : "opacity-0"
+            }`}
+            style={{ height: "140px" }}
+          >
+            <span className="text-3xl">🥈</span>
+            <span className="mt-1 text-sm font-bold">
+              {state.podium.second?.name ?? "—"}
+            </span>
+            <span className="text-xs text-yellow-400">
+              {state.podium.second?.score ?? 0}
+            </span>
+          </div>
+          {/* 1st place */}
+          <div
+            className={`flex w-32 flex-col items-center rounded-t-lg bg-yellow-600 pb-3 pt-4 transition-opacity ${
+              state.podium.revealed >= 3 ? "opacity-100" : "opacity-0"
+            }`}
+            style={{ height: "180px" }}
+          >
+            <span className="text-4xl">🥇</span>
+            <span className="mt-1 font-bold">
+              {state.podium.first?.name ?? "—"}
+            </span>
+            <span className="text-sm text-yellow-100">
+              {state.podium.first?.score ?? 0}
+            </span>
+          </div>
+          {/* 3rd place */}
+          <div
+            className={`flex w-24 flex-col items-center rounded-t-lg bg-amber-800 pb-3 pt-4 transition-opacity ${
+              state.podium.revealed >= 1 ? "opacity-100" : "opacity-0"
+            }`}
+            style={{ height: "110px" }}
+          >
+            <span className="text-2xl">🥉</span>
+            <span className="mt-1 text-sm font-bold">
+              {state.podium.third?.name ?? "—"}
+            </span>
+            <span className="text-xs text-yellow-400">
+              {state.podium.third?.score ?? 0}
+            </span>
+          </div>
+        </div>
+        {state.myRank && (
+          <p className="mt-6 text-lg text-gray-400">
+            Your rank: <span className="text-2xl font-bold text-white">#{state.myRank}</span>
+          </p>
+        )}
       </main>
     );
   }

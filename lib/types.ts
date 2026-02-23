@@ -144,4 +144,10 @@ export interface ParticipantState {
   };
   myRank?: number;
   leaderboard?: LeaderboardEntry[];
+  podium?: {
+    third: LeaderboardEntry | null;
+    second: LeaderboardEntry | null;
+    first: LeaderboardEntry | null;
+    revealed: number;
+  };
 }
