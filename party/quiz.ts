@@ -393,9 +393,31 @@ export default class QuizServer implements Party.Server {
           .join(" → ");
       }
 
+      const score = answer?.score ?? 0;
+      let outcome: "correct" | "partial" | "wrong" = "wrong";
+      if (score > 0) {
+        // Check if the answer was fully correct
+        let fullyCorrect = false;
+        if (answer) {
+          if (question.type === "single") {
+            fullyCorrect = answer.value === question.correctAnswer;
+          } else if (question.type === "multi") {
+            const sel = new Set(answer.value as number[]);
+            const cor = new Set(question.correctAnswers);
+            fullyCorrect = sel.size === cor.size && [...cor].every((v) => sel.has(v));
+          } else if (question.type === "slider") {
+            fullyCorrect = score === 1000;
+          } else if (question.type === "ranking") {
+            const sub = answer.value as number[];
+            fullyCorrect = question.correctOrder.every((v, i) => v === sub[i]);
+          }
+        }
+        outcome = fullyCorrect ? "correct" : "partial";
+      }
+
       base.myResult = {
-        correct: (answer?.score ?? 0) > 0,
-        pointsEarned: answer?.score ?? 0,
+        outcome,
+        pointsEarned: score,
         newTotal: participant.score,
         correctAnswer,
       };

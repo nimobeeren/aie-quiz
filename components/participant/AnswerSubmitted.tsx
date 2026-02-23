@@ -1,6 +1,6 @@
 interface AnswerSubmittedProps {
   result?: {
-    correct: boolean;
+    outcome: "correct" | "partial" | "wrong";
     pointsEarned: number;
     newTotal: number;
     correctAnswer?: string;
@@ -18,18 +18,24 @@ export default function AnswerSubmitted({ result }: AnswerSubmittedProps) {
     );
   }
 
+  const emoji =
+    result.outcome === "correct" ? "🎉" :
+    result.outcome === "partial" ? "😏" : "😔";
+
+  const label =
+    result.outcome === "correct" ? "Correct!" :
+    result.outcome === "partial" ? "Almost!" : "Not quite!";
+
   return (
     <div className="flex flex-col items-center gap-4">
-      <div className="text-6xl">{result.correct ? "🎉" : "😔"}</div>
-      <p className="text-2xl font-bold">
-        {result.correct ? "Correct!" : "Not quite!"}
-      </p>
+      <div className="text-6xl">{emoji}</div>
+      <p className="text-2xl font-bold">{label}</p>
       <p className="text-4xl font-bold text-yellow-400">
         +{result.pointsEarned}
       </p>
-      {!result.correct && result.correctAnswer && (
+      {result.correctAnswer && (
         <p className="text-center text-gray-300">
-          The answer was: <span className="font-semibold text-green-400">{result.correctAnswer}</span>
+          Correct answer: <span className="font-semibold text-green-400">{result.correctAnswer}</span>
         </p>
       )}
       <p className="text-gray-400">

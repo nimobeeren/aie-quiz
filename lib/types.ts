@@ -136,7 +136,7 @@ export interface ParticipantState {
     max?: number;
   };
   myResult?: {
-    correct: boolean;
+    outcome: "correct" | "partial" | "wrong";
     pointsEarned: number;
     newTotal: number;
     correctAnswer?: string;
