@@ -1,38 +1,45 @@
 {
   "questions": [
     {
-      "type": "single",
-      "question": "Which model architecture does GPT use?",
-      "options": ["RNN", "Transformer", "CNN", "LSTM"],
-      "correctAnswer": 1,
-      "timerSeconds": 30
-    },
-    {
       "type": "multi",
-      "question": "Which are valid LLM prompting techniques?",
+      "question": "What is AI Engineering?",
       "options": [
-        "Chain-of-thought",
-        "Backpropagation",
-        "Few-shot",
-        "Gradient descent"
+        "Building applications that rely on AI models",
+        "Using AI tools to build applications",
+        "Training new LLMs",
+        "A superset of prompt engineering"
       ],
-      "correctAnswers": [0, 2],
+      "correctAnswers": [0, 3],
       "timerSeconds": 30
     },
     {
-      "type": "slider",
-      "question": "How many parameters does GPT-4 have (estimated)?",
-      "min": 1000000,
-      "max": 100000000000000,
-      "correctAnswer": 1800000000000,
-      "timerSeconds": 30
+      "type": "single",
+      "question": "When evaluating RAG applications, a high groundedness score means the answer is factually correct about the real world",
+      "options": ["True", "False"],
+      "correctAnswer": 1,
+      "timerSeconds": 20
+    },
+    {
+      "type": "single",
+      "question": "Using MCP, how does a server request more information from a client?",
+      "options": ["Elicitation", "Sampling", "Handshake", "Prompting"],
+      "correctAnswer": 0,
+      "timerSeconds": 20
     },
     {
       "type": "ranking",
-      "question": "Rank these models by release date (earliest first)",
-      "options": ["GPT-4", "BERT", "GPT-3", "ChatGPT"],
-      "correctOrder": [1, 2, 3, 0],
+      "question": "Rank these models by intelligence (according to Artificial Analysis)",
+      "options": ["Gemini 3.1 Pro", "GLM-5", "DeepSeek V3.2", "Mistral Large 3"],
+      "correctOrder": [0, 1, 2, 3],
       "timerSeconds": 45
+    },
+    {
+      "type": "slider",
+      "question": "How many tokens does the Scrabble dictionary take up? (measured by GPT-5 tokenizer)",
+      "min": 1000,
+      "max": 100000000,
+      "correctAnswer": 635644,
+      "timerSeconds": 30
     }
   ]
 }
