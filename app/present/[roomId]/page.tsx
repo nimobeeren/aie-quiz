@@ -85,7 +85,7 @@ export default function PresentPage({
           {state.question && state.results && (
             <>
               {/* Single / Multi choice: bar chart */}
-              {"options" in state.question && state.question.options && (
+              {(state.question.type === "single" || state.question.type === "multi") && state.question.options && (
                 <div className="w-full max-w-2xl space-y-3">
                   {state.question.options.map((option, i) => {
                     const count = state.results!.distribution[String(i)] ?? 0;
