@@ -16,6 +16,7 @@ We're building a Kahoot-style real-time quiz app for a one-time AI Engineering q
 | Styling | **Tailwind CSS v4** | Ships with Next.js, fast iteration |
 | Drag & drop | **@dnd-kit/core** + **@dnd-kit/sortable** | Best touch/mobile support, actively maintained, composable |
 | QR codes | **qrcode** (npm) | Generate QR code for join URL |
+| Package manager | **pnpm** | Fast, disk-efficient. Use for all dependency operations. |
 
 ### Deployment (D4)
 
@@ -308,7 +309,7 @@ Using `@dnd-kit/core` + `@dnd-kit/sortable` with:
 3. Build participant name entry (`NameEntry.tsx`)
 4. Implement join protocol in PartyKit server
 
-### Phase 3: Game Loop & Question Types (Q2–Q6, R1, R2, R3)
+### Phase 3: Game Loop & Question Types (Q2–Q6, R1, R2, R3, P1, M1)
 1. Implement state machine in PartyKit server (`party/quiz.ts`)
 2. Build synchronized timer component (`Timer.tsx`)
 3. Build all four question type components (SingleChoice, MultiChoice, LogSlider, RankingDnd)
