@@ -1,7 +1,8 @@
 # Post-Mortem: AIE Quiz App
 
-**Date:** 2026-02-23
-**Total active time:** ~2.5 hours (14:12 – 18:12 CET, excluding ~75 min idle)
+**Date:** 2026-02-23  
+**Total active time:** ~2.5 hours (14:12 – 18:12 CET, excluding ~75 min idle)  
+**Esimated API cost:** $31.98 (measured by iO Bonzai)  
 **Result:** Fully functional Kahoot-style quiz app, deployed and ready for ~50 participants
 
 ---
@@ -26,11 +27,11 @@ Quick smoke test of the whole sub-agent pipeline: had Claude run a contrived fea
 
 **Developer activity:** Single prompt to kick it off, then manual cleanup.
 
-### Phase 4 — Full Build (~1h 15min, 15:29–15:45 build, then idle until 17:00)
+### Phase 4 — Full Build (~15min, 15:29–15:45 build, then idle until 17:00)
 
 One prompt: *"Go ahead and implement the entire app."* Claude orchestrated sub-agents across 6 phases, implementing all 26 requirements. The core build commits landed in ~15 minutes (15:29–15:45).
 
-**Developer activity:** Single prompt to start. Queued a few mid-flight instructions ("use Sonnet for implementation, Opus for orchestration"). Killed a stray dev server at one point.
+**Developer activity:** Single prompt to start. Queued a few mid-flight instructions ("use Sonnet for implementation, Opus for orchestration"). Killed a stray dev server at the end.
 
 ### Phase 5 — Playtesting & Polish (~1h 12min, 17:00–18:12)
 
@@ -65,11 +66,14 @@ The longest hands-on phase. Rapid-fire feedback loop: test on phone, send fix re
 
 ## By the Numbers
 
-| Phase | Duration | Developer Prompts | Commits |
-|-------|----------|-------------------|---------|
-| Planning & PRD | ~50 min | ~12 | 1 |
-| Agent infra & skills | ~25 min | ~9 | 2 |
-| Harness test | ~9 min | ~2 | 1 |
-| Full build | ~15 min active | ~2 | 6 |
-| Polish & deploy | ~75 min | ~20 | 18 |
-| **Total** | **~2.5 hours** | **~45** | **28** |
+
+| Phase                | Duration       | Developer Prompts | Commits |
+| -------------------- | -------------- | ----------------- | ------- |
+| Planning & PRD       | ~50 min        | ~12               | 1       |
+| Agent infra & skills | ~25 min        | ~9                | 2       |
+| Harness test         | ~9 min         | ~2                | 1       |
+| Full build           | ~15 min active | ~2                | 6       |
+| Polish & deploy      | ~75 min        | ~20               | 18      |
+| **Total**            | **~2.5 hours** | **~45**           | **28**  |
+
+
