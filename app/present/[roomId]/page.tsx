@@ -150,25 +150,58 @@ export default function PresentPage({
                 );
               })()}
 
-              {/* Ranking: show correct order */}
-              {state.question.type === "ranking" && (
-                <div className="w-full max-w-md space-y-2">
-                  <p className="text-center text-sm text-gray-400">Correct order:</p>
-                  {(state.results.correctAnswer as number[]).map((optIdx, rank) => (
-                    <div
-                      key={rank}
-                      className="flex items-center gap-3 rounded-lg bg-gray-800 px-4 py-2"
-                    >
-                      <span className="text-lg font-bold text-green-400">
-                        {rank + 1}.
-                      </span>
-                      <span className="text-lg">
-                        {state.question!.type === "ranking" && state.question!.options![optIdx]}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              )}
+              {/* Ranking: correct order + per-position breakdown */}
+              {state.question.type === "ranking" && (() => {
+                const q = state.question!;
+                if (q.type !== "ranking") return null;
+                const correctOrder = state.results!.correctAnswer as number[];
+                const posDist = state.results!.positionDistribution;
+                const total = state.totalParticipants || 1;
+
+                return (
+                  <div className="w-full max-w-2xl space-y-4">
+                    {correctOrder.map((correctOptIdx, pos) => (
+                      <div key={pos} className="space-y-1">
+                        <div className="flex items-center gap-2">
+                          <span className="w-6 text-lg font-bold text-gray-500">
+                            {pos + 1}.
+                          </span>
+                          <span className="font-bold text-green-400">
+                            {q.options[correctOptIdx]}
+                          </span>
+                        </div>
+                        {posDist && (
+                          <div className="ml-8 space-y-1">
+                            {q.options.map((opt, optIdx) => {
+                              const count = posDist[pos]?.[optIdx] ?? 0;
+                              if (count === 0) return null;
+                              const pct = Math.round((count / total) * 100);
+                              const isCorrect = optIdx === correctOptIdx;
+                              return (
+                                <div key={optIdx} className="flex items-center gap-2">
+                                  <span className="w-36 truncate text-right text-sm text-gray-400">
+                                    {opt}
+                                  </span>
+                                  <div className="flex-1">
+                                    <div
+                                      className={`h-5 rounded text-xs leading-5 px-2 ${
+                                        isCorrect ? "bg-green-600" : "bg-gray-600"
+                                      }`}
+                                      style={{ width: `${Math.max(pct, 8)}%` }}
+                                    >
+                                      {count}
+                                    </div>
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                );
+              })()}
             </>
           )}
           <button

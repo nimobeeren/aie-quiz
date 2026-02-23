@@ -578,10 +578,23 @@ export default class QuizServer implements Party.Server {
       };
     }
 
-    // ranking
+    // ranking: build a position × option matrix
+    const numOptions = question.options.length;
+    const positionDistribution: number[][] = Array.from(
+      { length: numOptions },
+      () => Array(numOptions).fill(0)
+    );
+    for (const a of answers) {
+      const order = a!.value as number[];
+      for (let pos = 0; pos < order.length; pos++) {
+        positionDistribution[pos][order[pos]]++;
+      }
+    }
+
     return {
       distribution: {},
       correctAnswer: question.correctOrder,
+      positionDistribution,
     };
   }
 

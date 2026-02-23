@@ -114,6 +114,8 @@ export interface PresenterState {
     distribution: Record<string, number>;
     correctAnswer: number | number[];
     answers?: { participantId: string; value: number | number[] }[];
+    // For ranking: positionDistribution[position][optionIndex] = count
+    positionDistribution?: number[][];
   };
   leaderboard?: LeaderboardEntry[];
   podium?: {
