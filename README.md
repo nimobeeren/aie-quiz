@@ -54,22 +54,15 @@ Edit `data/questions.json` to customize:
 
 ## Deployment
 
-Two separate deploys:
+Two separate deploys (requires PartyKit and Vercel accounts):
 
 ```bash
-# 1. Deploy PartyKit server
-npx partykit deploy
+# Deploy everything
+pnpm deploy
 
-# 2. Deploy Next.js app (Vercel, Netlify, etc.)
-# Set NEXT_PUBLIC_PARTYKIT_HOST to your PartyKit URL
+# Or deploy individually:
+pnpm deploy:partykit   # Deploy PartyKit server
+pnpm deploy:next       # Build and deploy Next.js to Vercel
 ```
 
-## Testing
-
-```bash
-# Component tests (Vitest + React Testing Library)
-pnpm test
-
-# E2E tests (Playwright — starts dev servers automatically)
-pnpm test:e2e
-```
+Set `NEXT_PUBLIC_PARTYKIT_HOST` in your Vercel project settings to your PartyKit URL (e.g. `aie-quiz.yourname.partykit.dev`).

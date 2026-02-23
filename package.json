@@ -6,7 +6,10 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deploy:partykit": "partykit deploy",
+    "deploy:next": "next build && vercel deploy --prebuilt",
+    "deploy": "pnpm deploy:partykit && pnpm deploy:next"
   },
   "packageManager": "pnpm@10.29.3",
   "dependencies": {
