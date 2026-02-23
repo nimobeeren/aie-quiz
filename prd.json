@@ -64,25 +64,25 @@
       "id": "J1",
       "title": "Join via QR code",
       "description": "The presenter view displays a QR code that participants can scan to open the participant view and join the session.",
-      "complete": false
+      "complete": true
     },
     {
       "id": "J2",
       "title": "Join via 4-digit code",
       "description": "Participants can navigate to the app URL and enter a 4-digit room code to join a session.",
-      "complete": false
+      "complete": true
     },
     {
       "id": "J3",
       "title": "Name entry on join",
       "description": "After joining, participants enter their display name before they can participate in the quiz.",
-      "complete": false
+      "complete": true
     },
     {
       "id": "J4",
       "title": "Show joining participants on presenter view",
       "description": "As participants join and enter their names, their names appear on the presenter view in real time so everyone can see who has joined.",
-      "complete": false
+      "complete": true
     },
     {
       "id": "R1",

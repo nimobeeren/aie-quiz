@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect, useState, useCallback, use } from "react";
+import { useState, useCallback, use } from "react";
 import usePartySocket from "partysocket/react";
 import type { ParticipantState, ClientMessage } from "@/lib/types";
+import NameEntry from "@/components/participant/NameEntry";
+import WaitingScreen from "@/components/participant/WaitingScreen";
 
 export default function PlayPage({
   params,
@@ -11,7 +13,6 @@ export default function PlayPage({
 }) {
   const { roomId } = use(params);
   const [state, setState] = useState<ParticipantState | null>(null);
-  const [name, setName] = useState("");
   const [joined, setJoined] = useState(false);
 
   const socket = usePartySocket({
@@ -30,16 +31,9 @@ export default function PlayPage({
     [socket]
   );
 
-  function handleJoin(e: React.FormEvent) {
-    e.preventDefault();
-    if (!name.trim()) return;
-    send({ type: "join", name: name.trim() });
-    setJoined(true);
-  }
-
   if (!state) {
     return (
-      <main className="flex min-h-screen items-center justify-center">
+      <main className="flex min-h-screen items-center justify-center p-6">
         <p className="text-gray-400">Connecting...</p>
       </main>
     );
@@ -48,25 +42,20 @@ export default function PlayPage({
   if (!joined) {
     return (
       <main className="flex min-h-screen flex-col items-center justify-center p-6">
-        <h1 className="mb-6 text-2xl font-bold">Join Quiz</h1>
-        <form onSubmit={handleJoin} className="flex flex-col items-center gap-4">
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Your name"
-            maxLength={20}
-            className="w-64 rounded-lg border border-gray-700 bg-gray-800 px-4 py-3 text-center text-xl focus:border-blue-500 focus:outline-none"
-            autoFocus
-          />
-          <button
-            type="submit"
-            disabled={!name.trim()}
-            className="rounded-lg bg-blue-600 px-8 py-3 text-lg font-semibold transition hover:bg-blue-500 disabled:opacity-50"
-          >
-            Join
-          </button>
-        </form>
+        <NameEntry
+          onSubmit={(name) => {
+            send({ type: "join", name });
+            setJoined(true);
+          }}
+        />
+      </main>
+    );
+  }
+
+  if (state.phase === "lobby") {
+    return (
+      <main className="flex min-h-screen items-center justify-center p-6">
+        <WaitingScreen />
       </main>
     );
   }
@@ -74,15 +63,11 @@ export default function PlayPage({
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-6">
       <p className="text-gray-400">
-        {state.phase === "lobby" && "Waiting for the quiz to start..."}
         {state.phase === "question" && "Question active"}
         {state.phase === "results" && "Results"}
         {state.phase === "leaderboard" && "Leaderboard"}
         {state.phase === "podium" && "Final results"}
         {state.phase === "finished" && "Thanks for playing!"}
-      </p>
-      <p className="mt-2 text-sm text-gray-500">
-        Phase: {state.phase} | Question: {state.currentQuestionIndex + 1}
       </p>
     </main>
   );

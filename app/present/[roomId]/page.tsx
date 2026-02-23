@@ -3,6 +3,7 @@
 import { useState, useCallback, use } from "react";
 import usePartySocket from "partysocket/react";
 import type { PresenterState, ClientMessage } from "@/lib/types";
+import Lobby from "@/components/presenter/Lobby";
 
 export default function PresentPage({
   params,
@@ -38,39 +39,19 @@ export default function PresentPage({
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-8">
-      <h1 className="mb-4 text-3xl font-bold">Room {roomId}</h1>
-      <p className="mb-2 text-gray-400">Phase: {state.phase}</p>
-      <p className="mb-6 text-gray-400">
-        Participants: {state.participants.length}
-      </p>
-
       {state.phase === "lobby" && (
-        <div className="flex flex-col items-center gap-4">
-          <div className="text-gray-300">
-            {state.participants.map((p, i) => (
-              <span
-                key={i}
-                className="mr-2 inline-block rounded bg-gray-800 px-3 py-1"
-              >
-                {p.name}
-              </span>
-            ))}
-          </div>
-          <button
-            onClick={() =>
-              send({ type: "presenter_action", action: "start" })
-            }
-            disabled={state.participants.length === 0}
-            className="rounded-lg bg-green-600 px-8 py-3 text-lg font-semibold transition hover:bg-green-500 disabled:opacity-50"
-          >
-            Start Quiz
-          </button>
-        </div>
+        <Lobby
+          roomId={roomId}
+          participants={state.participants}
+          onStart={() =>
+            send({ type: "presenter_action", action: "start" })
+          }
+        />
       )}
 
       {state.phase === "question" && (
         <div className="text-center">
-          <p className="text-xl">{state.question?.question}</p>
+          <p className="text-2xl font-bold">{state.question?.question}</p>
           <p className="mt-4 text-gray-400">
             {state.answerCount} / {state.totalParticipants} answered
           </p>
@@ -79,7 +60,7 @@ export default function PresentPage({
 
       {state.phase === "results" && (
         <div className="flex flex-col items-center gap-4">
-          <p className="text-xl">Results</p>
+          <p className="text-2xl font-bold">Results</p>
           <button
             onClick={() =>
               send({ type: "presenter_action", action: "show_leaderboard" })
@@ -93,12 +74,13 @@ export default function PresentPage({
 
       {state.phase === "leaderboard" && (
         <div className="flex flex-col items-center gap-4">
-          <p className="text-xl">Leaderboard</p>
+          <p className="text-2xl font-bold">Leaderboard</p>
           <button
             onClick={() => {
-              const isLastQuestion =
-                state.currentQuestionIndex >= 3; // TODO: get from server
-              if (isLastQuestion) {
+              const totalQuestions = 4; // from questions.json
+              const isLast =
+                state.currentQuestionIndex >= totalQuestions - 1;
+              if (isLast) {
                 send({ type: "presenter_action", action: "show_podium" });
               } else {
                 send({ type: "presenter_action", action: "next" });
@@ -113,7 +95,7 @@ export default function PresentPage({
 
       {state.phase === "podium" && (
         <div className="flex flex-col items-center gap-4">
-          <p className="text-xl">Podium</p>
+          <p className="text-2xl font-bold">Podium</p>
           <button
             onClick={() =>
               send({ type: "presenter_action", action: "reveal_next" })
@@ -126,7 +108,7 @@ export default function PresentPage({
       )}
 
       {state.phase === "finished" && (
-        <p className="text-2xl font-bold">Quiz Complete!</p>
+        <p className="text-3xl font-bold">Quiz Complete!</p>
       )}
     </main>
   );
