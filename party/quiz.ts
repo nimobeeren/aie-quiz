@@ -422,7 +422,8 @@ export default class QuizServer implements Party.Server {
           }
         } else if (question.type === "slider") {
           fullyCorrect = score === 1000;
-          // Slider is proximity-based, no "almost" concept
+          // "Almost" = within 10% of the log range (score >= 900)
+          if (!fullyCorrect) almostCorrect = score >= 900;
         } else if (question.type === "ranking") {
           const sub = answer.value as number[];
           fullyCorrect = question.correctOrder.every((v, i) => v === sub[i]);
