@@ -22,7 +22,7 @@
       "id": "D4",
       "title": "Production deployment",
       "description": "Configure the project for easy production deployment with all environment variables and database connections working.",
-      "complete": false
+      "complete": true
     },
     {
       "id": "Q1",
