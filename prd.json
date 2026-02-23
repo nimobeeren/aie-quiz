@@ -4,19 +4,19 @@
       "id": "D1",
       "title": "Next.js project setup",
       "description": "Initialize a Next.js project with TypeScript. This is the foundation for both the presenter and participant views.",
-      "complete": false
+      "complete": true
     },
     {
       "id": "D2",
       "title": "Real-time infrastructure",
       "description": "Set up WebSocket or equivalent real-time communication so the server can push state changes to all connected clients simultaneously.",
-      "complete": false
+      "complete": true
     },
     {
       "id": "D3",
       "title": "Database setup",
       "description": "Set up a lightweight, low-cost database to store sessions, participants, and answers. Must support real-time queries for leaderboard computation.",
-      "complete": false
+      "complete": true
     },
     {
       "id": "D4",
@@ -28,7 +28,7 @@
       "id": "Q1",
       "title": "Load questions from JSON file",
       "description": "Questions are defined in a local JSON file with their type, options, correct answers, and timer duration. The server reads this file to drive the quiz.",
-      "complete": false
+      "complete": true
     },
     {
       "id": "Q2",

@@ -1,0 +1,5 @@
+{
+  "name": "aie-quiz",
+  "main": "party/quiz.ts",
+  "compatibilityDate": "2024-01-01"
+}

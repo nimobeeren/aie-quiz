@@ -1,0 +1,38 @@
+{
+  "questions": [
+    {
+      "type": "single",
+      "question": "Which model architecture does GPT use?",
+      "options": ["RNN", "Transformer", "CNN", "LSTM"],
+      "correctAnswer": 1,
+      "timerSeconds": 30
+    },
+    {
+      "type": "multi",
+      "question": "Which are valid LLM prompting techniques?",
+      "options": [
+        "Chain-of-thought",
+        "Backpropagation",
+        "Few-shot",
+        "Gradient descent"
+      ],
+      "correctAnswers": [0, 2],
+      "timerSeconds": 30
+    },
+    {
+      "type": "slider",
+      "question": "How many parameters does GPT-4 have (estimated)?",
+      "min": 1000000,
+      "max": 100000000000000,
+      "correctAnswer": 1800000000000,
+      "timerSeconds": 30
+    },
+    {
+      "type": "ranking",
+      "question": "Rank these models by release date (earliest first)",
+      "options": ["GPT-4", "BERT", "GPT-3", "ChatGPT"],
+      "correctOrder": [1, 2, 3, 0],
+      "timerSeconds": 45
+    }
+  ]
+}
