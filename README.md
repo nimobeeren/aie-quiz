@@ -19,14 +19,13 @@ cp .env.example .env.local
 
 ## Development
 
-Run both servers (in separate terminals):
-
 ```bash
-# Next.js dev server (port 3000)
+# Start both Next.js (port 3000) and PartyKit (port 1999)
 pnpm dev
 
-# PartyKit dev server (port 1999)
-npx partykit dev
+# Or run individually:
+pnpm dev:next       # Next.js only
+pnpm dev:partykit   # PartyKit only
 ```
 
 Then open:

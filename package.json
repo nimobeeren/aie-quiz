@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack & partykit dev & wait",
+    "dev": "pnpm dev:next & pnpm dev:partykit & wait",
+    "dev:next": "next dev --turbopack",
+    "dev:partykit": "partykit dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
