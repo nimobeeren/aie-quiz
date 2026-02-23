@@ -1,0 +1,160 @@
+{
+  "requirements": [
+    {
+      "id": "D1",
+      "title": "Next.js project setup",
+      "description": "Initialize a Next.js project with TypeScript. This is the foundation for both the presenter and participant views.",
+      "complete": false
+    },
+    {
+      "id": "D2",
+      "title": "Real-time infrastructure",
+      "description": "Set up WebSocket or equivalent real-time communication so the server can push state changes to all connected clients simultaneously.",
+      "complete": false
+    },
+    {
+      "id": "D3",
+      "title": "Database setup",
+      "description": "Set up a lightweight, low-cost database to store sessions, participants, and answers. Must support real-time queries for leaderboard computation.",
+      "complete": false
+    },
+    {
+      "id": "D4",
+      "title": "Production deployment",
+      "description": "Configure the project for easy production deployment with all environment variables and database connections working.",
+      "complete": false
+    },
+    {
+      "id": "Q1",
+      "title": "Load questions from JSON file",
+      "description": "Questions are defined in a local JSON file with their type, options, correct answers, and timer duration. The server reads this file to drive the quiz.",
+      "complete": false
+    },
+    {
+      "id": "Q2",
+      "title": "Multiple choice — single answer",
+      "description": "A question type where one option is correct and participants can select exactly one answer.",
+      "complete": false
+    },
+    {
+      "id": "Q3",
+      "title": "Multiple choice — multi-answer",
+      "description": "A question type where multiple options can be correct and participants can select multiple answers.",
+      "complete": false
+    },
+    {
+      "id": "Q4",
+      "title": "Number slider with log scale",
+      "description": "A question type where participants position a slider on a logarithmic scale to guess a number. The slider range and correct value are defined in the JSON.",
+      "complete": false
+    },
+    {
+      "id": "Q5",
+      "title": "Ranking — drag and drop",
+      "description": "A question type where participants drag and drop items into the correct order. Must work well on mobile touch devices.",
+      "complete": false
+    },
+    {
+      "id": "Q6",
+      "title": "Per-question timer",
+      "description": "Each question has a configurable timer duration defined in the JSON. The timer is displayed to both the presenter and participants.",
+      "complete": false
+    },
+    {
+      "id": "J1",
+      "title": "Join via QR code",
+      "description": "The presenter view displays a QR code that participants can scan to open the participant view and join the session.",
+      "complete": false
+    },
+    {
+      "id": "J2",
+      "title": "Join via 4-digit code",
+      "description": "Participants can navigate to the app URL and enter a 4-digit room code to join a session.",
+      "complete": false
+    },
+    {
+      "id": "J3",
+      "title": "Name entry on join",
+      "description": "After joining, participants enter their display name before they can participate in the quiz.",
+      "complete": false
+    },
+    {
+      "id": "J4",
+      "title": "Show joining participants on presenter view",
+      "description": "As participants join and enter their names, their names appear on the presenter view in real time so everyone can see who has joined.",
+      "complete": false
+    },
+    {
+      "id": "R1",
+      "title": "Synchronized question delivery",
+      "description": "When the presenter advances to the next question, all participants receive and see the new question at the same time.",
+      "complete": false
+    },
+    {
+      "id": "R2",
+      "title": "Synchronized timer",
+      "description": "The timer countdown is synchronized so it ends at the exact same moment for all participants. The server determines the end time and all clients count down to it.",
+      "complete": false
+    },
+    {
+      "id": "R3",
+      "title": "Live answer count on presenter view",
+      "description": "During an active question, the presenter view shows how many participants have submitted an answer without revealing what they answered.",
+      "complete": false
+    },
+    {
+      "id": "S1",
+      "title": "Speed-based scoring for correct answers",
+      "description": "Correct answers earn up to 1000 points. The fastest correct answer gets 1000 and slower correct answers get proportionally fewer. Incorrect or missing answers get 0.",
+      "complete": false
+    },
+    {
+      "id": "S2",
+      "title": "Slider scoring by proximity",
+      "description": "For number slider questions, the closest answer to the correct value gets 1000 points. Points drop off based on distance on the log scale. Ties receive equal points.",
+      "complete": false
+    },
+    {
+      "id": "S3",
+      "title": "Ranking partial credit",
+      "description": "For ranking questions, participants receive partial credit based on how many items they placed in the correct position.",
+      "complete": false
+    },
+    {
+      "id": "P1",
+      "title": "Presenter view — question display",
+      "description": "The presenter view shows the current question text and all answer options while a round is active.",
+      "complete": false
+    },
+    {
+      "id": "P2",
+      "title": "Presenter view — answer distribution",
+      "description": "After a round ends, the presenter view reveals a breakdown of how participants answered, showing counts per option or a distribution chart.",
+      "complete": false
+    },
+    {
+      "id": "P3",
+      "title": "Leaderboard between questions",
+      "description": "After showing results for each question, the presenter view displays a leaderboard with cumulative scores before advancing to the next question.",
+      "complete": false
+    },
+    {
+      "id": "P4",
+      "title": "Final podium reveal",
+      "description": "After the last question, the presenter view shows a podium-style reveal with suspense — announcing 3rd place, then 2nd, then 1st, one by one.",
+      "complete": false
+    },
+    {
+      "id": "M1",
+      "title": "Participant view — question and answer UI",
+      "description": "Participants see the question text and can submit their answer using the appropriate input for the question type (buttons, checkboxes, slider, or drag-and-drop).",
+      "complete": false
+    },
+    {
+      "id": "M2",
+      "title": "Mobile-first participant layout",
+      "description": "The participant view is designed mobile-first for phone screens. All interactions (tapping, sliding, dragging) work well on touch devices.",
+      "complete": false
+    }
+  ]
+}
