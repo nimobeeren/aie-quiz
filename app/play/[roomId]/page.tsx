@@ -114,6 +114,7 @@ export default function PlayPage({
             <MultiChoice
               question=""
               options={state.question.options}
+              endTime={state.endTime}
               onSubmit={(indices) => handleSubmitAnswer(indices)}
             />
           )}
@@ -132,6 +133,7 @@ export default function PlayPage({
             <RankingDnd
               question=""
               options={state.question.options}
+              endTime={state.endTime}
               onSubmit={(order) => handleSubmitAnswer(order)}
             />
           )}

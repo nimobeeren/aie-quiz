@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 interface MultiChoiceProps {
   question: string;
   options: string[];
+  endTime: number | null;
   onSubmit: (selected: number[]) => void;
 }
 
@@ -15,9 +16,11 @@ const OPTION_COLORS = [
   "bg-yellow-600 hover:bg-yellow-500",
 ];
 
-export default function MultiChoice({ question, options, onSubmit }: MultiChoiceProps) {
+export default function MultiChoice({ question, options, endTime, onSubmit }: MultiChoiceProps) {
   const [selected, setSelected] = useState<Set<number>>(new Set());
   const [submitted, setSubmitted] = useState(false);
+  const selectedRef = useRef(selected);
+  selectedRef.current = selected;
 
   function toggle(index: number) {
     setSelected((prev) => {
@@ -32,10 +35,23 @@ export default function MultiChoice({ question, options, onSubmit }: MultiChoice
   }
 
   function handleSubmit() {
-    const indices = Array.from(selected).sort((a, b) => a - b);
+    if (submitted) return;
+    const indices = Array.from(selectedRef.current).sort((a, b) => a - b);
+    if (indices.length === 0) return;
     setSubmitted(true);
     onSubmit(indices);
   }
+
+  useEffect(() => {
+    if (!endTime || submitted) return;
+    const ms = endTime - Date.now();
+    if (ms <= 0) {
+      handleSubmit();
+      return;
+    }
+    const timeout = setTimeout(handleSubmit, ms);
+    return () => clearTimeout(timeout);
+  }, [endTime, submitted]);
 
   if (submitted) {
     return (

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   DndContext,
   closestCenter,
@@ -22,6 +22,7 @@ import { CSS } from "@dnd-kit/utilities";
 interface RankingDndProps {
   question: string;
   options: string[];
+  endTime: number | null;
   onSubmit: (order: number[]) => void;
 }
 
@@ -75,7 +76,7 @@ function SortableItem({ item, position }: SortableItemProps) {
   );
 }
 
-export default function RankingDnd({ question, options, onSubmit }: RankingDndProps) {
+export default function RankingDnd({ question, options, endTime, onSubmit }: RankingDndProps) {
   const [items, setItems] = useState<Item[]>(() =>
     options.map((label, index) => ({
       id: `item-${index}`,
@@ -84,6 +85,8 @@ export default function RankingDnd({ question, options, onSubmit }: RankingDndPr
     }))
   );
   const [submitted, setSubmitted] = useState(false);
+  const itemsRef = useRef(items);
+  itemsRef.current = items;
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -105,9 +108,21 @@ export default function RankingDnd({ question, options, onSubmit }: RankingDndPr
   }
 
   function handleSubmit() {
-    onSubmit(items.map((item) => item.originalIndex));
+    if (submitted) return;
+    onSubmit(itemsRef.current.map((item) => item.originalIndex));
     setSubmitted(true);
   }
+
+  useEffect(() => {
+    if (!endTime || submitted) return;
+    const ms = endTime - Date.now();
+    if (ms <= 0) {
+      handleSubmit();
+      return;
+    }
+    const timeout = setTimeout(handleSubmit, ms);
+    return () => clearTimeout(timeout);
+  }, [endTime, submitted]);
 
   if (submitted) {
     return (
