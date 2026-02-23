@@ -1,4 +1,9 @@
-# Feature Implementation Skill
+---
+name: feature
+description: Implements a single requirement from prd.json in an isolated git worktree. Used by sub-agents to build individual features with proper branching and testing.
+argument-hint: <requirement-id>
+disable-model-invocation: true
+---
 
 Implements a single requirement from `prd.json` in an isolated git worktree.
 

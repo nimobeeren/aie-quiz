@@ -1,4 +1,9 @@
-# Review Skill
+---
+name: review
+description: Reviews a feature branch against its requirement, validates tests and coverage, and merges when all checks pass.
+argument-hint: <requirement-id>
+disable-model-invocation: true
+---
 
 Reviews a feature branch against its requirement, validates tests, and merges when everything passes.
 
