@@ -6,6 +6,19 @@ import type { PresenterState, ClientMessage } from "@/lib/types";
 import Lobby from "@/components/presenter/Lobby";
 import QuestionDisplay from "@/components/presenter/QuestionDisplay";
 
+function formatPresenterNumber(n: number): string {
+  if (n >= 1_000_000_000_000) return `${+(n / 1_000_000_000_000).toPrecision(3)}T`;
+  if (n >= 1_000_000_000) return `${+(n / 1_000_000_000).toPrecision(3)}B`;
+  if (n >= 1_000_000) return `${+(n / 1_000_000).toPrecision(3)}M`;
+  if (n >= 1_000) return `${+(n / 1_000).toPrecision(3)}K`;
+  return `${Math.round(n)}`;
+}
+
+function logPosition(value: number, min: number, max: number): number {
+  const pos = (Math.log(value / min) / Math.log(max / min)) * 100;
+  return Math.max(0, Math.min(100, pos));
+}
+
 export default function PresentPage({
   params,
 }: {
@@ -69,32 +82,94 @@ export default function PresentPage({
             </p>
           )}
           <h2 className="text-3xl font-bold">Results</h2>
-          {state.question && "options" in state.question && state.results && (
-            <div className="w-full max-w-2xl space-y-3">
-              {state.question.options?.map((option, i) => {
-                const count = state.results!.distribution[String(i)] ?? 0;
-                const total = state.totalParticipants || 1;
-                const pct = Math.round((count / total) * 100);
-                const isCorrect = Array.isArray(state.results!.correctAnswer)
-                  ? (state.results!.correctAnswer as number[]).includes(i)
-                  : state.results!.correctAnswer === i;
+          {state.question && state.results && (
+            <>
+              {/* Single / Multi choice: bar chart */}
+              {"options" in state.question && state.question.options && (
+                <div className="w-full max-w-2xl space-y-3">
+                  {state.question.options.map((option, i) => {
+                    const count = state.results!.distribution[String(i)] ?? 0;
+                    const total = state.totalParticipants || 1;
+                    const pct = Math.round((count / total) * 100);
+                    const isCorrect = Array.isArray(state.results!.correctAnswer)
+                      ? (state.results!.correctAnswer as number[]).includes(i)
+                      : state.results!.correctAnswer === i;
 
+                    return (
+                      <div key={i} className="flex items-center gap-3">
+                        <span className="w-32 text-right text-sm">{option}</span>
+                        <div className="flex-1">
+                          <div
+                            className={`h-8 rounded ${isCorrect ? "bg-green-600" : "bg-gray-600"}`}
+                            style={{ width: `${Math.max(pct, 2)}%` }}
+                          />
+                        </div>
+                        <span className="w-12 text-sm text-gray-400">
+                          {count}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+
+              {/* Slider: log-scale dot plot */}
+              {state.question.type === "slider" && state.results.answers && (() => {
+                const q = state.question!;
+                if (q.type !== "slider") return null;
                 return (
-                  <div key={i} className="flex items-center gap-3">
-                    <span className="w-32 text-right text-sm">{option}</span>
-                    <div className="flex-1">
-                      <div
-                        className={`h-8 rounded ${isCorrect ? "bg-green-600" : "bg-gray-600"}`}
-                        style={{ width: `${Math.max(pct, 2)}%` }}
-                      />
+                  <div className="w-full max-w-2xl">
+                    <div className="mb-2 text-center">
+                      <span className="text-lg text-gray-400">Correct: </span>
+                      <span className="text-2xl font-bold text-green-400">
+                        {formatPresenterNumber(state.results!.correctAnswer as number)}
+                      </span>
                     </div>
-                    <span className="w-12 text-sm text-gray-400">
-                      {count}
-                    </span>
+                    <div className="relative mx-auto h-16 w-full rounded-lg bg-gray-800">
+                      <div
+                        className="absolute top-0 h-full w-0.5 bg-green-500"
+                        style={{
+                          left: `${logPosition(state.results!.correctAnswer as number, q.min, q.max)}%`,
+                        }}
+                      />
+                      {state.results!.answers!.map((a, i) => (
+                        <div
+                          key={i}
+                          className="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-400 opacity-80"
+                          style={{
+                            left: `${logPosition(a.value as number, q.min, q.max)}%`,
+                          }}
+                        />
+                      ))}
+                    </div>
+                    <div className="mt-1 flex justify-between text-sm text-gray-500">
+                      <span>{formatPresenterNumber(q.min)}</span>
+                      <span>{formatPresenterNumber(q.max)}</span>
+                    </div>
                   </div>
                 );
-              })}
-            </div>
+              })()}
+
+              {/* Ranking: show correct order */}
+              {state.question.type === "ranking" && (
+                <div className="w-full max-w-md space-y-2">
+                  <p className="text-center text-sm text-gray-400">Correct order:</p>
+                  {(state.results.correctAnswer as number[]).map((optIdx, rank) => (
+                    <div
+                      key={rank}
+                      className="flex items-center gap-3 rounded-lg bg-gray-800 px-4 py-2"
+                    >
+                      <span className="text-lg font-bold text-green-400">
+                        {rank + 1}.
+                      </span>
+                      <span className="text-lg">
+                        {state.question!.type === "ranking" && state.question!.options![optIdx]}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </>
           )}
           <button
             onClick={() =>

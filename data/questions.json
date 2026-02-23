@@ -36,8 +36,8 @@
     {
       "type": "slider",
       "question": "How many tokens does the Scrabble dictionary take up? (measured by GPT-5 tokenizer)",
-      "min": 1000,
-      "max": 100000000,
+      "min": 10000,
+      "max": 10000000,
       "correctAnswer": 635644,
       "timerSeconds": 20
     }
