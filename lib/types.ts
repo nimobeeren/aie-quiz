@@ -89,7 +89,8 @@ export type ClientMessage =
         | "show_results"
         | "show_leaderboard"
         | "show_podium"
-        | "reveal_next";
+        | "reveal_next"
+        | "finish";
     };
 
 // ── Server → Client Messages ──
@@ -138,6 +139,7 @@ export interface ParticipantState {
     correct: boolean;
     pointsEarned: number;
     newTotal: number;
+    correctAnswer?: string;
   };
   myRank?: number;
   leaderboard?: LeaderboardEntry[];

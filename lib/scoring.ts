@@ -14,7 +14,9 @@ export function scoreSingleChoice(
 }
 
 /**
- * Multi-choice: must select exactly the correct set. No partial credit.
+ * Multi-choice: partial credit based on correct selections minus incorrect ones.
+ * accuracy = (correctHits - wrongSelections) / totalCorrect, floored at 0
+ * Perfect selection gets full speed-based score; partial gets proportional credit.
  */
 export function scoreMultiChoice(
   selected: number[],
@@ -24,11 +26,16 @@ export function scoreMultiChoice(
 ): number {
   const selectedSet = new Set(selected);
   const correctSet = new Set(correct);
-  if (selectedSet.size !== correctSet.size) return 0;
-  for (const v of correctSet) {
-    if (!selectedSet.has(v)) return 0;
+
+  let correctHits = 0;
+  for (const v of selectedSet) {
+    if (correctSet.has(v)) correctHits++;
   }
-  return speedScore(responseTimeMs, timerDurationMs);
+  const wrongSelections = selectedSet.size - correctHits;
+  const accuracy = Math.max(0, (correctHits - wrongSelections) / correctSet.size);
+
+  if (accuracy === 0) return 0;
+  return Math.round(accuracy * speedScore(responseTimeMs, timerDurationMs));
 }
 
 /**

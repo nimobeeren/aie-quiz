@@ -3,6 +3,7 @@ interface AnswerSubmittedProps {
     correct: boolean;
     pointsEarned: number;
     newTotal: number;
+    correctAnswer?: string;
   };
 }
 
@@ -21,11 +22,16 @@ export default function AnswerSubmitted({ result }: AnswerSubmittedProps) {
     <div className="flex flex-col items-center gap-4">
       <div className="text-6xl">{result.correct ? "🎉" : "😔"}</div>
       <p className="text-2xl font-bold">
-        {result.correct ? "Correct!" : "Wrong!"}
+        {result.correct ? "Correct!" : "Not quite!"}
       </p>
       <p className="text-4xl font-bold text-yellow-400">
         +{result.pointsEarned}
       </p>
+      {!result.correct && result.correctAnswer && (
+        <p className="text-center text-gray-300">
+          The answer was: <span className="font-semibold text-green-400">{result.correctAnswer}</span>
+        </p>
+      )}
       <p className="text-gray-400">
         Total: {result.newTotal} points
       </p>

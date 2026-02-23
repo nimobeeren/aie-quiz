@@ -192,7 +192,7 @@ export default function PresentPage({
               </span>
             </div>
           </div>
-          {state.podium.revealed < 3 && (
+          {state.podium.revealed < 3 ? (
             <button
               onClick={() =>
                 send({ type: "presenter_action", action: "reveal_next" })
@@ -200,6 +200,15 @@ export default function PresentPage({
               className="rounded-lg bg-yellow-600 px-8 py-3 text-lg font-bold transition hover:bg-yellow-500"
             >
               Reveal Next
+            </button>
+          ) : (
+            <button
+              onClick={() =>
+                send({ type: "presenter_action", action: "finish" })
+              }
+              className="rounded-lg bg-blue-600 px-8 py-3 text-lg font-bold transition hover:bg-blue-500"
+            >
+              Show Final Standings
             </button>
           )}
         </div>

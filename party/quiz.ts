@@ -139,6 +139,12 @@ export default class QuizServer implements Party.Server {
     this.state.answerCount++;
     this.saveState();
     this.broadcastAll();
+
+    // Auto-advance to results when all participants have answered
+    const totalParticipants = Object.keys(this.state.participants).length;
+    if (this.state.answerCount >= totalParticipants && totalParticipants > 0) {
+      this.endQuestion();
+    }
   }
 
   handlePresenterAction(
@@ -149,6 +155,7 @@ export default class QuizServer implements Party.Server {
       | "show_leaderboard"
       | "show_podium"
       | "reveal_next"
+      | "finish"
   ) {
     switch (action) {
       case "start":
@@ -186,12 +193,16 @@ export default class QuizServer implements Party.Server {
         if (this.state.phase !== "podium") return;
         if (this.state.revealedPodiumPlace > 0) {
           this.state.revealedPodiumPlace--;
-          if (this.state.revealedPodiumPlace === 0) {
-            this.state.phase = "finished";
-          }
           this.saveState();
           this.broadcastAll();
         }
+        break;
+
+      case "finish":
+        if (this.state.phase !== "podium") return;
+        this.state.phase = "finished";
+        this.saveState();
+        this.broadcastAll();
         break;
     }
   }
@@ -358,10 +369,27 @@ export default class QuizServer implements Party.Server {
       const answer = participant.answers.find(
         (a) => a.questionIndex === s.currentQuestionIndex
       );
+
+      let correctAnswer: string | undefined;
+      if (question.type === "single") {
+        correctAnswer = question.options[question.correctAnswer];
+      } else if (question.type === "multi") {
+        correctAnswer = question.correctAnswers
+          .map((i) => question.options[i])
+          .join(", ");
+      } else if (question.type === "slider") {
+        correctAnswer = String(question.correctAnswer);
+      } else if (question.type === "ranking") {
+        correctAnswer = question.correctOrder
+          .map((i) => question.options[i])
+          .join(" → ");
+      }
+
       base.myResult = {
         correct: (answer?.score ?? 0) > 0,
         pointsEarned: answer?.score ?? 0,
         newTotal: participant.score,
+        correctAnswer,
       };
     }
 
