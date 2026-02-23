@@ -415,11 +415,29 @@ export default class QuizServer implements Party.Server {
         outcome = fullyCorrect ? "correct" : "partial";
       }
 
+      let yourAnswer: string | undefined;
+      if (answer) {
+        if (question.type === "single") {
+          yourAnswer = question.options[answer.value as number];
+        } else if (question.type === "multi") {
+          yourAnswer = (answer.value as number[])
+            .map((i) => question.options[i])
+            .join(", ");
+        } else if (question.type === "slider") {
+          yourAnswer = formatNumber(answer.value as number);
+        } else if (question.type === "ranking") {
+          yourAnswer = (answer.value as number[])
+            .map((i) => question.options[i])
+            .join(" → ");
+        }
+      }
+
       base.myResult = {
         outcome,
         pointsEarned: score,
         newTotal: participant.score,
         correctAnswer,
+        yourAnswer,
       };
     }
 

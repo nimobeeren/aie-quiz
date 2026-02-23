@@ -140,6 +140,7 @@ export interface ParticipantState {
     pointsEarned: number;
     newTotal: number;
     correctAnswer?: string;
+    yourAnswer?: string;
   };
   myRank?: number;
   leaderboard?: LeaderboardEntry[];

@@ -4,6 +4,7 @@ interface AnswerSubmittedProps {
     pointsEarned: number;
     newTotal: number;
     correctAnswer?: string;
+    yourAnswer?: string;
   };
 }
 
@@ -19,8 +20,11 @@ export default function AnswerSubmitted({ result }: AnswerSubmittedProps) {
   }
 
   const emoji =
-    result.outcome === "correct" ? "🎉" :
-    result.outcome === "partial" ? "😏" : "😔";
+    result.outcome === "correct"
+      ? "🎉"
+      : result.outcome === "partial"
+        ? "🧐"
+        : "😔";
 
   const label =
     result.outcome === "correct" ? "Correct!" :
@@ -33,6 +37,11 @@ export default function AnswerSubmitted({ result }: AnswerSubmittedProps) {
       <p className="text-4xl font-bold text-yellow-400">
         +{result.pointsEarned}
       </p>
+      {result.yourAnswer && (
+        <p className="text-center text-gray-300">
+          Your answer: <span className="font-semibold text-white">{result.yourAnswer}</span>
+        </p>
+      )}
       {result.correctAnswer && (
         <p className="text-center text-gray-300">
           Correct answer: <span className="font-semibold text-green-400">{result.correctAnswer}</span>
