@@ -97,7 +97,9 @@ export default function PresentPage({
             }
             className="rounded-lg bg-blue-600 px-8 py-3 text-lg font-semibold transition hover:bg-blue-500"
           >
-            Show Leaderboard
+            {state.currentQuestionIndex >= state.totalQuestions - 1
+              ? "Show Podium"
+              : "Show Leaderboard"}
           </button>
         </div>
       )}

@@ -184,7 +184,14 @@ export default class QuizServer implements Party.Server {
 
       case "show_leaderboard":
         if (this.state.phase !== "results") return;
-        this.state.phase = "leaderboard";
+        const isLastQuestion =
+          this.state.currentQuestionIndex >= questions.length - 1;
+        if (isLastQuestion) {
+          this.state.phase = "podium";
+          this.state.revealedPodiumPlace = 3;
+        } else {
+          this.state.phase = "leaderboard";
+        }
         this.saveState();
         this.broadcastAll();
         break;
@@ -395,24 +402,45 @@ export default class QuizServer implements Party.Server {
 
       const score = answer?.score ?? 0;
       let outcome: "correct" | "partial" | "wrong" = "wrong";
-      if (score > 0) {
-        // Check if the answer was fully correct
+      if (score > 0 && answer) {
         let fullyCorrect = false;
-        if (answer) {
-          if (question.type === "single") {
-            fullyCorrect = answer.value === question.correctAnswer;
-          } else if (question.type === "multi") {
-            const sel = new Set(answer.value as number[]);
-            const cor = new Set(question.correctAnswers);
-            fullyCorrect = sel.size === cor.size && [...cor].every((v) => sel.has(v));
-          } else if (question.type === "slider") {
-            fullyCorrect = score === 1000;
-          } else if (question.type === "ranking") {
-            const sub = answer.value as number[];
-            fullyCorrect = question.correctOrder.every((v, i) => v === sub[i]);
+        let almostCorrect = false;
+
+        if (question.type === "single") {
+          fullyCorrect = answer.value === question.correctAnswer;
+        } else if (question.type === "multi") {
+          const sel = new Set(answer.value as number[]);
+          const cor = new Set(question.correctAnswers);
+          fullyCorrect = sel.size === cor.size && [...cor].every((v) => sel.has(v));
+          if (!fullyCorrect) {
+            // "Almost" = symmetric difference of exactly 1 (one missing or one extra)
+            let missing = 0;
+            let extra = 0;
+            for (const v of cor) { if (!sel.has(v)) missing++; }
+            for (const v of sel) { if (!cor.has(v)) extra++; }
+            almostCorrect = missing + extra === 1;
+          }
+        } else if (question.type === "slider") {
+          fullyCorrect = score === 1000;
+          // Slider is proximity-based, no "almost" concept
+        } else if (question.type === "ranking") {
+          const sub = answer.value as number[];
+          fullyCorrect = question.correctOrder.every((v, i) => v === sub[i]);
+          if (!fullyCorrect) {
+            // "Almost" = Kendall tau distance of exactly 1 (one pair swapped)
+            let discordant = 0;
+            for (let i = 0; i < sub.length; i++) {
+              for (let j = i + 1; j < sub.length; j++) {
+                const ci = question.correctOrder.indexOf(sub[i]);
+                const cj = question.correctOrder.indexOf(sub[j]);
+                if (ci > cj) discordant++;
+              }
+            }
+            almostCorrect = discordant === 1;
           }
         }
-        outcome = fullyCorrect ? "correct" : "partial";
+
+        outcome = fullyCorrect ? "correct" : almostCorrect ? "partial" : "wrong";
       }
 
       let yourAnswer: string | undefined;
