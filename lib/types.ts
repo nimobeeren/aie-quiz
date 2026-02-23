@@ -103,6 +103,7 @@ export interface LeaderboardEntry {
 export interface PresenterState {
   phase: GamePhase;
   currentQuestionIndex: number;
+  totalQuestions: number;
   endTime: number | null;
   answerCount: number;
   totalParticipants: number;

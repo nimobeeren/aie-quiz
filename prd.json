@@ -34,31 +34,31 @@
       "id": "Q2",
       "title": "Multiple choice — single answer",
       "description": "A question type where one option is correct and participants can select exactly one answer.",
-      "complete": false
+      "complete": true
     },
     {
       "id": "Q3",
       "title": "Multiple choice — multi-answer",
       "description": "A question type where multiple options can be correct and participants can select multiple answers.",
-      "complete": false
+      "complete": true
     },
     {
       "id": "Q4",
       "title": "Number slider with log scale",
       "description": "A question type where participants position a slider on a logarithmic scale to guess a number. The slider range and correct value are defined in the JSON.",
-      "complete": false
+      "complete": true
     },
     {
       "id": "Q5",
       "title": "Ranking — drag and drop",
       "description": "A question type where participants drag and drop items into the correct order. Must work well on mobile touch devices.",
-      "complete": false
+      "complete": true
     },
     {
       "id": "Q6",
       "title": "Per-question timer",
       "description": "Each question has a configurable timer duration defined in the JSON. The timer is displayed to both the presenter and participants.",
-      "complete": false
+      "complete": true
     },
     {
       "id": "J1",
@@ -88,73 +88,73 @@
       "id": "R1",
       "title": "Synchronized question delivery",
       "description": "When the presenter advances to the next question, all participants receive and see the new question at the same time.",
-      "complete": false
+      "complete": true
     },
     {
       "id": "R2",
       "title": "Synchronized timer",
       "description": "The timer countdown is synchronized so it ends at the exact same moment for all participants. The server determines the end time and all clients count down to it.",
-      "complete": false
+      "complete": true
     },
     {
       "id": "R3",
       "title": "Live answer count on presenter view",
       "description": "During an active question, the presenter view shows how many participants have submitted an answer without revealing what they answered.",
-      "complete": false
+      "complete": true
     },
     {
       "id": "S1",
       "title": "Speed-based scoring for correct answers",
       "description": "Correct answers earn up to 1000 points. The fastest correct answer gets 1000 and slower correct answers get proportionally fewer. Incorrect or missing answers get 0.",
-      "complete": false
+      "complete": true
     },
     {
       "id": "S2",
       "title": "Slider scoring by proximity",
       "description": "For number slider questions, the closest answer to the correct value gets 1000 points. Points drop off based on distance on the log scale. Ties receive equal points.",
-      "complete": false
+      "complete": true
     },
     {
       "id": "S3",
       "title": "Ranking partial credit",
       "description": "For ranking questions, participants receive partial credit based on how many items they placed in the correct position.",
-      "complete": false
+      "complete": true
     },
     {
       "id": "P1",
       "title": "Presenter view — question display",
       "description": "The presenter view shows the current question text and all answer options while a round is active.",
-      "complete": false
+      "complete": true
     },
     {
       "id": "P2",
       "title": "Presenter view — answer distribution",
       "description": "After a round ends, the presenter view reveals a breakdown of how participants answered, showing counts per option or a distribution chart.",
-      "complete": false
+      "complete": true
     },
     {
       "id": "P3",
       "title": "Leaderboard between questions",
       "description": "After showing results for each question, the presenter view displays a leaderboard with cumulative scores before advancing to the next question.",
-      "complete": false
+      "complete": true
     },
     {
       "id": "P4",
       "title": "Final podium reveal",
       "description": "After the last question, the presenter view shows a podium-style reveal with suspense — announcing 3rd place, then 2nd, then 1st, one by one.",
-      "complete": false
+      "complete": true
     },
     {
       "id": "M1",
       "title": "Participant view — question and answer UI",
       "description": "Participants see the question text and can submit their answer using the appropriate input for the question type (buttons, checkboxes, slider, or drag-and-drop).",
-      "complete": false
+      "complete": true
     },
     {
       "id": "M2",
       "title": "Mobile-first participant layout",
       "description": "The participant view is designed mobile-first for phone screens. All interactions (tapping, sliding, dragging) work well on touch devices.",
-      "complete": false
+      "complete": true
     }
   ]
 }

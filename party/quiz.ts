@@ -297,6 +297,7 @@ export default class QuizServer implements Party.Server {
     const base: PresenterState = {
       phase: s.phase,
       currentQuestionIndex: s.currentQuestionIndex,
+      totalQuestions: questions.length,
       endTime: s.endTime,
       answerCount: s.answerCount,
       totalParticipants: Object.keys(s.participants).length,
