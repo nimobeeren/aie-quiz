@@ -10,7 +10,7 @@
         "A superset of prompt engineering"
       ],
       "correctAnswers": [0, 3],
-      "timerSeconds": 30
+      "timerSeconds": 20
     },
     {
       "type": "single",
@@ -31,7 +31,7 @@
       "question": "Rank these models by intelligence (according to Artificial Analysis)",
       "options": ["Gemini 3.1 Pro", "GLM-5", "DeepSeek V3.2", "Mistral Large 3"],
       "correctOrder": [0, 1, 2, 3],
-      "timerSeconds": 45
+      "timerSeconds": 20
     },
     {
       "type": "slider",
@@ -39,7 +39,7 @@
       "min": 1000,
       "max": 100000000,
       "correctAnswer": 635644,
-      "timerSeconds": 30
+      "timerSeconds": 20
     }
   ]
 }
