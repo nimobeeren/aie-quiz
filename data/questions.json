@@ -9,33 +9,54 @@
         "Building applications that rely on AI models",
         "Using AI tools to build applications"
       ],
-      "correctAnswers": [2, 0],
-      "timerSeconds": 20
+      "correctAnswers": [
+        2,
+        0
+      ],
+      "timerSeconds": 30
     },
     {
       "type": "single",
-      "question": "When evaluating RAG applications, a high groundedness score means the answer is factually correct about the real world",
-      "options": ["True", "False"],
+      "question": "When evaluating RAG applications, a high groundedness score means the answer is factually correct about the world",
+      "options": [
+        "True",
+        "False"
+      ],
       "correctAnswer": 1,
       "timerSeconds": 20
     },
     {
       "type": "single",
       "question": "Using MCP, how does a server request more information from a client?",
-      "options": ["Sampling", "Prompting", "Elicitation", "Handshake"],
+      "options": [
+        "Sampling",
+        "Prompting",
+        "Elicitation",
+        "Handshake"
+      ],
       "correctAnswer": 2,
       "timerSeconds": 20
     },
     {
       "type": "ranking",
       "question": "Rank these models by intelligence (according to Artificial Analysis)",
-      "options": ["DeepSeek V3.2", "Mistral Large 3", "Gemini 3.1 Pro", "GLM-5"],
-      "correctOrder": [2, 3, 0, 1],
-      "timerSeconds": 20
+      "options": [
+        "DeepSeek V3.2",
+        "Mistral Large 3",
+        "Gemini 3.1 Pro",
+        "GLM-5"
+      ],
+      "correctOrder": [
+        2,
+        3,
+        0,
+        1
+      ],
+      "timerSeconds": 30
     },
     {
       "type": "slider",
-      "question": "How many tokens does the Scrabble dictionary take up? (measured by GPT-5 tokenizer)",
+      "question": "How many tokens are in the Scrabble dictionary? (measured by GPT-5 tokenizer)",
       "min": 10000,
       "max": 10000000,
       "correctAnswer": 635644,
